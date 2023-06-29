@@ -71,7 +71,7 @@ const ProductDisplay = {
 			</button>
 		</div>
         <p>{{ product_desc }}</p>
-		<review-list :reviews="reviews" />
+		<review-list :reviews="reviews" v-if="reviews.length" />
 		<review-form @review-submit="AddReview"/>
     </div>
     `,

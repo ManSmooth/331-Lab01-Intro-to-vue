@@ -39,7 +39,7 @@ const ProductDisplay = {
         <p v-if="onSale">On Sale</p>
         <product-detail :details="details" />
         <div
-            v-for="[index, variant] in variants.entries()"
+            v-for="(variant, index) in variants"
             :key="variant.id"
             @mouseover="UpdateVariant(index)"
             class="color-circle"
@@ -71,12 +71,14 @@ const ProductDisplay = {
 			</button>
 		</div>
         <p>{{ product_desc }}</p>
+		<review-list :reviews="reviews" />
+		<review-form @review-submit="AddReview"/>
     </div>
     `,
 	props: {
 		premium: Boolean,
 	},
-	emits: ["add-to-cart","remove-from-cart"],
+	emits: ["add-to-cart", "remove-from-cart"],
 	setup(props, { emit }) {
 		const onSale = ref(true);
 		const brand = ref("SE 331");
@@ -96,6 +98,7 @@ const ProductDisplay = {
 				quantity: 0,
 			},
 		]);
+		const reviews = ref([]);
 		return {
 			product,
 			brand,
@@ -112,8 +115,13 @@ const ProductDisplay = {
 			details: ref(["50% cotton", "30% wool", "20% polyester"]),
 			variants,
 			sizes: ref(["S", "M", "L"]),
-			AddToCart: () => emit("add-to-cart", variants.value[selectedVariant.value].id),
-			RemoveFromCart: () => emit("remove-from-cart", variants.value[selectedVariant.value].id),
+			AddToCart: () =>
+				emit("add-to-cart", variants.value[selectedVariant.value].id),
+			RemoveFromCart: () =>
+				emit(
+					"remove-from-cart",
+					variants.value[selectedVariant.value].id
+				),
 			UpdateVariant: (index) => (selectedVariant.value = index),
 			SetInventory: (amnt) => {
 				variants.value[selectedVariant.value].quantity = amnt;
@@ -130,6 +138,8 @@ const ProductDisplay = {
 					return 30;
 				}
 			}),
+			reviews,
+			AddReview: (review) => reviews.value.push(review),
 		};
 	},
 };

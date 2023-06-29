@@ -1,4 +1,4 @@
-const { createApp, ref, computed } = Vue;
+const { createApp, ref, computed, reactive } = Vue;
 const app = createApp({
 	setup() {
 		const cart = ref([]);
@@ -9,11 +9,11 @@ const app = createApp({
 			cartItem: computed(() =>
 				cart.value.reduce((acc, curr) => {
 					if (acc[curr]) {
-						acc[curr]++
+						acc[curr]++;
 					} else {
-						acc[curr] = 1
+						acc[curr] = 1;
 					}
-					return acc
+					return acc;
 				}, {})
 			),
 			premium,
@@ -30,4 +30,6 @@ const app = createApp({
 });
 app.component("product-display", ProductDisplay);
 app.component("product-detail", ProductDetail);
+app.component("review-form", ReviewForm);
+app.component("review-list", ReviewList);
 app.mount("#app");

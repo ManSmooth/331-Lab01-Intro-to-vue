@@ -56,20 +56,28 @@ const ProductDisplay = {
             <p>Sizes:</p>
             <p v-for="size of sizes">{{ size }}</p>
         </div>
-        <button
-            class="button"
-            @click="AddToCart"
-            :disabled="!inStock"
-            :class="{disabledButton: !inStock}">
-            Add to Cart
-        </button>
+		<div style="display: flex; gap: 1rem;">
+			<button
+				class="button"
+				@click="AddToCart"
+				:disabled="!inStock"
+				:class="{disabledButton: !inStock}">
+				Add to Cart
+			</button>
+			<button
+				class="button"
+				@click="RemoveFromCart">
+				Remove from Cart
+			</button>
+		</div>
         <p>{{ product_desc }}</p>
     </div>
     `,
 	props: {
 		premium: Boolean,
 	},
-	setup(props) {
+	emits: ["add-to-cart","remove-from-cart"],
+	setup(props, { emit }) {
 		const onSale = ref(true);
 		const brand = ref("SE 331");
 		const product = ref("Boots");
@@ -104,7 +112,8 @@ const ProductDisplay = {
 			details: ref(["50% cotton", "30% wool", "20% polyester"]),
 			variants,
 			sizes: ref(["S", "M", "L"]),
-			AddToCart: () => cart.value++,
+			AddToCart: () => emit("add-to-cart", variants.value[selectedVariant.value].id),
+			RemoveFromCart: () => emit("remove-from-cart", variants.value[selectedVariant.value].id),
 			UpdateVariant: (index) => (selectedVariant.value = index),
 			SetInventory: (amnt) => {
 				variants.value[selectedVariant.value].quantity = amnt;

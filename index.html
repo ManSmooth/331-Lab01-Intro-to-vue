@@ -13,7 +13,12 @@
 		<div id="app">
 			<div class="nav-bar"></div>
 			<div class="cart" style="position: sticky; top: 2rem">
-				Cart ({{ cart }})
+				<p>
+					Cart ({{ cartAmount }})
+				</p>
+				<p>
+					{{ cartItem }}
+				</p>
 			</div>
 			<div
 				class="button"
@@ -26,7 +31,7 @@
 				@click="TogglePremium">
 				Premium: {{ premium }}
 			</div>
-			<product-display :premium="premium" />
+			<product-display :premium="premium" @add-to-cart="AddToCart" @remove-from-cart="RemoveFromCart"/>
 		</div>
 
 		<!-- Import Js -->

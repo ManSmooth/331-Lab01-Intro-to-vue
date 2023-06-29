@@ -33,6 +33,10 @@ body {
 }
 
 .color-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 	width: 50px;
 	height: 50px;
 	margin-top: 8px;
@@ -89,6 +93,7 @@ li {
 
 .out-of-stock-img {
 	opacity: 0.5;
+  filter: grayscale(1);
 }
 
 p {

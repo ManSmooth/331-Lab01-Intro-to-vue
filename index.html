@@ -12,6 +12,7 @@
 	<body>
 		<div id="app">
 			<div class="nav-bar"></div>
+			<div class="cart">Cart ({{ cart }})</div>
 			<div class="product-display">
 				<div class="product-container">
 					<div class="product-image">
@@ -21,22 +22,39 @@
 			</div>
 			<div class="product-info">
 				<h1><a :href="camt_url">{{ product }}</a></h1>
-				<p v-if="inventory > 10">In stock</p>
-				<p v-else-if="inventory <= 10 && inventory > 0">
-					Almost out of stock
-				</p>
-				<p v-else>Out of stock</p>
+				<div style="display: flex; flex-direction: column; gap: 1rem; align-items: start;">
+					<p v-if="inventory > 10">In stock</p>
+					<p v-else-if="inventory <= 10 && inventory > 0">
+						Almost out of stock
+					</p>
+					<p v-else>Out of stock</p>
+                    <div style="display: flex; align-items: center;">
+                        <button class="button" @click="SetInventory(100)">In Stock</button>
+                        <button class="button" @click="SetInventory(10)">Almost out of Stock</button>
+                        <button class="button" @click="SetInventory(0)">Out of Stock</button>
+                    </div>
+				</div>
 				<p v-if="onSale">On Sale</p>
 				<ul>
 					<li v-for="detail of details">{{ detail }}</li>
 				</ul>
-				<div v-for="variant of variants" :key="variant.id">
+				<div
+					v-for="variant of variants"
+					:key="variant.id"
+					@mouseover="UpdateImage(variant.image)">
 					{{ variant.color }}
 				</div>
-				<div style="display: flex; flex-direction: row; gap: 1rem; align-items: center;">
+				<div
+					style="
+						display: flex;
+						flex-direction: row;
+						gap: 1rem;
+						align-items: center;
+					">
 					<p>Sizes:</p>
 					<p v-for="size of sizes">{{ size }}</p>
 				</div>
+				<button class="button" @click="AddToCart">Add to Cart</button>
 				<p>{{ product_desc }}</p>
 			</div>
 		</div>

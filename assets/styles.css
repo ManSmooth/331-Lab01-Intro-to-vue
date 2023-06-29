@@ -109,6 +109,7 @@ p {
 
 .product-image,
 .product-info {
+  padding: 1rem;
 	width: 50%;
 }
 

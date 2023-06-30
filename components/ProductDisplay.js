@@ -1,61 +1,63 @@
 const ProductDisplay = {
-	template: `
-    <div class="product-display">
-        <div class="product-container">
-            <div class="product-image">
-                <img
-                    :src="image"
-                    :class="{'out-of-stock-img': !inStock }" />
-            </div>
-        </div>
-    </div>
-    <div class="product-info">
-        <h1><a :href="camt_url">{{ title }}</a></h1>
-        <div
-            style="
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-                align-items: start;
-            ">
-            <p v-if="inventory > 10">In stock</p>
-            <p v-else-if="inventory <= 10 && inventory > 0">
-                Almost out of stock
-            </p>
-            <p v-else>Out of stock</p>
-            <div style="display: flex; align-items: center">
-                <button class="button" @click="SetInventory(100)">
-                    In Stock
-                </button>
-                <button class="button" @click="SetInventory(10)">
-                    Almost out of Stock
-                </button>
-                <button class="button" @click=" SetInventory(0)">
-                    Out of Stock
-                </button>
-            </div>
-            <p>Shipping: {{ shipping }}</p>
-        </div>
-        <p v-if="onSale">On Sale</p>
-        <product-detail :details="details" />
-        <div
-            v-for="(variant, index) in variants"
-            :key="variant.id"
-            @mouseover="UpdateVariant(index)"
-            class="color-circle"
-            :style="{backgroundColor: variant.color}">
-            {{ variant.color }}
-        </div>
-        <div
-            style="
-                display: flex;
-                flex-direction: row;
-                gap: 1rem;
-                align-items: center;
-            ">
-            <p>Sizes:</p>
-            <p v-for="size of sizes">{{ size }}</p>
-        </div>
+	template:
+	/* html */
+	`
+	<div class="product-display">
+		<div class="product-container">
+			<div class="product-image">
+				<img
+					:src="image"
+					:class="{'out-of-stock-img': !inStock }" />
+			</div>
+		</div>
+	</div>
+	<div class="product-info">
+		<h1><a :href="camt_url">{{ title }}</a></h1>
+		<div
+			style="
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+				align-items: start;
+			">
+			<p v-if="inventory > 10">In stock</p>
+			<p v-else-if="inventory <= 10 && inventory > 0">
+				Almost out of stock
+			</p>
+			<p v-else>Out of stock</p>
+			<div style="display: flex; align-items: center">
+				<button class="button" @click="SetInventory(100)">
+					In Stock
+				</button>
+				<button class="button" @click="SetInventory(10)">
+					Almost out of Stock
+				</button>
+				<button class="button" @click=" SetInventory(0)">
+					Out of Stock
+				</button>
+			</div>
+			<p>Shipping: {{ shipping }}</p>
+		</div>
+		<p v-if="onSale">On Sale</p>
+		<product-detail :details="details" />
+		<div
+			v-for="(variant, index) in variants"
+			:key="variant.id"
+			@mouseover="UpdateVariant(index)"
+			class="color-circle"
+			:style="{backgroundColor: variant.color}">
+			{{ variant.color }}
+		</div>
+		<div
+			style="
+				display: flex;
+				flex-direction: row;
+				gap: 1rem;
+				align-items: center;
+			">
+			<p>Sizes:</p>
+			<p v-for="size of sizes">{{ size }}</p>
+		</div>
 		<div style="display: flex; gap: 1rem;">
 			<button
 				class="button"
@@ -70,11 +72,11 @@ const ProductDisplay = {
 				Remove from Cart
 			</button>
 		</div>
-        <p>{{ product_desc }}</p>
+		<p>{{ product_desc }}</p>
 		<review-list :reviews="reviews" v-if="reviews.length" />
 		<review-form @review-submit="AddReview"/>
-    </div>
-    `,
+	</div>
+	`,
 	props: {
 		premium: Boolean,
 	},
